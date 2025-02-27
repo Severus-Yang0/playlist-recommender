@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: playlist-model-generator-job
+  namespace: boyu
+spec:
+  template:
+    metadata:
+      labels:
+        app: playlist-model-generator
+    spec:
+      containers:
+      - name: model-generator
+        image: severusy/playlist-ml:v1
+        env:
+        - name: INPUT_DATASET
+          value: "/data/2023_spotify_ds1.csv"
+        - name: OUTPUT_MODEL
+          value: "/mnt/model/playlist_rules.pkl"
+        - name: OUTPUT_METADATA
+          value: "/mnt/model/metadata.txt"
+        volumeMounts:
+        - name: dataset-volume
+          mountPath: /data
+        - name: model-volume
+          mountPath: /mnt/model
+      restartPolicy: OnFailure
+      volumes:
+      - name: dataset-volume
+        hostPath:
+          path: /home/datasets/spotify
+      - name: model-volume
+        persistentVolumeClaim:
+          claimName: playlist-recommender-pvc

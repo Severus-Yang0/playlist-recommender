@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playlist-api-deployment
+  namespace: boyu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playlist-api
+  template:
+    metadata:
+      labels:
+        app: playlist-api
+    spec:
+      containers:
+      - name: api-server
+        image: severusy/playlist-api:v1
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MODEL_PATH
+          value: "/mnt/model/playlist_rules.pkl"
+        - name: METADATA_PATH
+          value: "/mnt/model/metadata.txt"
+        - name: PORT
+          value: "5000"
+        - name: VERSION
+          value: "1.0.0"
+        volumeMounts:
+        - name: model-volume
+          mountPath: /mnt/model
+      volumes:
+      - name: model-volume
+        persistentVolumeClaim:
+          claimName: playlist-recommender-pvc
