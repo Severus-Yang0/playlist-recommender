@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pickle
 import os
 import time
@@ -6,7 +7,7 @@ from datetime import datetime
 import random
 
 app = Flask(__name__)
-
+CORS(app)
 # 配置
 MODEL_PATH = os.environ.get('MODEL_PATH', '/mnt/model/playlist_rules.pkl')
 METADATA_PATH = os.environ.get('METADATA_PATH', '/mnt/model/metadata.txt')

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: api-server
-        image: severusy/playlist-api:v1
+        image: severusy/playlist-api:v1.1
         ports:
         - containerPort: 5000
         env:
@@ -26,7 +26,7 @@ spec:
         - name: PORT
           value: "5000"
         - name: VERSION
-          value: "1.0.1"
+          value: "1.0.2"
         volumeMounts:
         - name: model-volume
           mountPath: /mnt/model
