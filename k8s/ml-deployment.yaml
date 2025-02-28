@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: playlist-model-generator-job
+  name: playlist-model-generator-job-v2
   namespace: boyu
 spec:
   template:
@@ -14,7 +14,7 @@ spec:
         image: severusy/playlist-ml:v1
         env:
         - name: INPUT_DATASET
-          value: "/data/2023_spotify_ds1.csv"
+          value: "/data/2023_spotify_ds2.csv"
         - name: OUTPUT_MODEL
           value: "/mnt/model/playlist_rules.pkl"
         - name: OUTPUT_METADATA
